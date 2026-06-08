@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AR - Escaneo</title>
+
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image.prod.css" />
+  <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+</head>
+<body>
+  <!-- UI de escaneo visible inicialmente -->
+  <div id="ui-escaneo" class="ui-escaneo">
+    <h2>Apunta la cámara trasera al objeto para escanear</h2>
+    <p>Escaneando... (usa la cámara trasera)</p>
+
+    <button id="btn-emergencia" type="button">Entrar con clave de emergencia</button>
+
+    <div id="seccion-password" style="display: none; margin-top: 18px; width: 100%; max-width: 360px;">
+      <input type="text" placeholder="Introduce la clave..." id="input-clave" />
+      <button id="btn-verificar" type="button">Verificar</button>
+      <p id="mensaje-error" aria-live="polite" style="margin: 10px 0 0; color: #ff6b7a;"></p>
+    </div>
+  </div>
+
+  <!-- Contenido oculto que se mostrará tras el reconocimiento -->
+  <div id="pantalla-contenido" style="display: none;">
+    <h1>Un mensaje especial para ti</h1>
+
+    <audio id="audio-music" src="audio.mp3" preload="auto"></audio>
+    <button id="btn-music" type="button">Reproducir / Pausar música</button>
+
+    <section id="galeria">
+      <h2>Galería</h2>
+      <div class="imagenes">
+        <img src="foto1.jpg" alt="Foto 1" />
+        <img src="foto2.jpg" alt="Foto 2" />
+      </div>
+    </section>
+
+    <section id="mensaje-romantico">
+      <h2>Mensaje</h2>
+      <p>Cada día a tu lado es mi aventura favorita. Te quiero.</p>
+    </section>
+
+    <button id="btn-leeme" type="button" class="btn-leeme">📖 Léeme</button>
+    <div id="texto-leeme" style="display:none;">
+      <p>Un hilo invisible que se convirtió en un lazo, mi niña, como el zorro y el principito. 💗 Al principio, solo eran dos extraños en medio de la inmensidad. 🌌 Para el Principito, el zorro era solo un zorro idéntico a cien mil otros zorros. Para el zorro, el niño era solo un niño más, un habitante pasajero de un universo que a veces resulta demasiado grande y solitario. 🌎 pero entonces, el zorro pronunció esa palabra mágica que lo cambiaría todo: Domesticar. ✨ Domesticar no es poseer, ni dominar, ni encadenar. Domesticar, en el idioma del zorro, significa crear lazos. 🤝 Es el acto valiente de mirar a alguien entre la multitud y decirle, en un tierno silencio: "Decido que seas única para mí". 🌹 Y es que los lazos no se construyen con prisa; se necesita tiempo y mucha paciencia para acortar cualquier distancia. ⏳ Es sentarse un poco más cerca cada día, aprender a cruzarse con las miradas y descubrir cómo escucharse sin palabras (aunque a veces yo sea un poco malo para eso). 🙈 Al final, la verdad más pura es que no se ve bien sino con el corazón, porque lo esencial es invisible a los ojos. 👁️❤️ Las cosas más bellas de la vida la lealtad, la ternura, el amor, la complicidad no se pueden tocar ni comprar, simplemente se sienten en lo más profundo. Y nos convertimos, para siempre, en responsables de aquello que hemos domesticado. 🦊👑 Y ciertamente tú me domesticaste a mí; eso significan hoy nuestros collares, un lazo eterno e inquebrantable entre nosotros, mi niña, que se lleva en el alma y se ve con toda la fuerza en nuestro JM301. 🔐💞</p>
+    </div>
+  </div>
+
+  <!-- Escena A-Frame + MindAR: abre cámara trasera y usa targets.mind -->
+  <a-scene
+    mindar-image="imageTargetSrc: targets.mind; maxTrack: 1; autoStart: true; facingMode: environment;"
+    embedded
+    vr-mode-ui="enabled: false"
+    device-orientation-permission-ui="enabled: false"
+  >
+    <a-camera position="0 0 0"></a-camera>
+
+    <!-- Target placeholder (se puede usar para reproducir/mostrar objetos AR) -->
+    <a-entity mindar-image-target="targetIndex: 0">
+      <!-- Contenido AR opcional; vacío por ahora -->
+    </a-entity>
+  </a-scene>
+
+  <div id="lightbox" style="display:none;">
+    <span id="close-lightbox">&times;</span>
+    <img id="lightbox-img" src="" alt="Vista ampliada" />
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
